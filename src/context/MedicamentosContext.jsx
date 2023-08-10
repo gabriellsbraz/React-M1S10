@@ -21,18 +21,28 @@ export const MedicamentosContextProvider = ({children}) => {
     }
 
     const novaLista = [...listaMedicamentos, novoMedicamento]
+    localStorage.setItem("listaMedicamentos", JSON.stringify(novaLista))
 
     setListaMedicamentos(novaLista)
-    console.log("Medicamento cadastrado com sucesso!")
-    console.log("Lista de medicamentos:", novaLista)
+    alert("Medicamento cadastrado com sucesso!")
   }
 
   const FavoritarMedicamento = (id) => {
 
+    const lista = listaMedicamentos.map(item => {
+     if(item.id == id){
+      item.favorito = !item.favorito
+     }
+    
+     return item
+    })
+
+    setListaMedicamentos(lista)
   }
 
-  return(
-    <MedicamentosContext.Provider value={{listaMedicamentos, AdicionarMedicamento, FavoritarMedicamento}}>
+  return (
+    <MedicamentosContext.Provider 
+    value={{listaMedicamentos, AdicionarMedicamento, FavoritarMedicamento}}>
       {children}
     </MedicamentosContext.Provider>
   )
